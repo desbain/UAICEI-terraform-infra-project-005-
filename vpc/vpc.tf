@@ -6,3 +6,13 @@ resource "aws_vpc" "main_vpc" {
     Name = "${var.tags["project"]}-${var.tags["application"]}-${var.tags["environment"]}-main-vpc"
   })
 }
+
+#CREATING INTERNET GATEWAY
+
+resource "aws_internet_gateway" "igw" {
+  vpc_id = aws_vpc.main_vpc.id
+
+  tags = {
+    Name = "${var.tags["project"]}-${var.tags["application"]}-${var.tags["environment"]}-igw"
+  }
+}
