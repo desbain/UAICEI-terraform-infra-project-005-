@@ -20,4 +20,5 @@ module "vpc" {
   availability_zone         = var.availability_zone
   private_subnet_cidr_block = var.private_subnet_cidr_block
   db_cidr_block             = var.db_cidr_block
+
 }
