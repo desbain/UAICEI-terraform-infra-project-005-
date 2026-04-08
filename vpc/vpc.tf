@@ -159,7 +159,7 @@ resource "aws_route_table" "private_rt_az2a" {
 
 resource "aws_route_table_association" "assoc_private_subnet_az2a" {
   subnet_id      = aws_subnet.private_subnet_az2a.id
-  route_table_id = aws_route_table.private_rt.id
+  route_table_id = aws_route_table.private_rt_az2a.id
 }
 
 resource "aws_route_table_association" "assoc_db_subnet_az2a" {
