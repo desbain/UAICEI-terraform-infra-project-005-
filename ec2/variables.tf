@@ -14,10 +14,18 @@ variable "instance_type" {
   type = string
 }
 
-variable "public_subnet_id" {
+variable "public_subnet_id_az2a" {
   type = string
 }
 
 variable "key_name" {
   type = string
+}
+
+variable "private_subnet_id_az2a" {
+    type = string
+}
+
+variable "private_subnet_id_az2b" {
+    type = string
 }
