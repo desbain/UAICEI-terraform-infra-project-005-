@@ -49,7 +49,7 @@ resource "aws_lb_target_group" "Jupiter-app-tg" {
     interval            = 30
     matcher             = "200, 301, 302"
     path                = "/"
-    port                = "80 "
+    port                = 80
     protocol            = "HTTP"
     timeout             = 5
     unhealthy_threshold = 2
@@ -82,7 +82,7 @@ resource "aws_lb" "jupiter_app_lb" {
 
 resource "aws_lb_listener" "jupiter_app_alb_listener" {
   load_balancer_arn = aws_lb.jupiter_app_lb.arn
-  port                = "80"
+  port                = 80
   protocol            = "HTTP"
 
   default_action {
