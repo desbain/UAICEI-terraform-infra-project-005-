@@ -16,3 +16,11 @@ variable "public_subnet_id_az2b" {
   description = "Public subnet ID for AZ2B"
   type        = string
 }
+
+variable "ssl_policy" {
+  type = string
+}
+
+variable "certificate_arn" {
+  type = string
+}

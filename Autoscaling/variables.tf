@@ -48,3 +48,4 @@ variable "min_size" {
 variable "desired_capacity" {
   type = number
 }
+

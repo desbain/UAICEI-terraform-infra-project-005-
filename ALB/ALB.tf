@@ -76,12 +76,31 @@ resource "aws_lb" "jupiter_app_lb" {
   })
 }
 
-# CREATING A LISTENER FOR THE LOAD BALANCER ----------------------------------------
+# CREATING A LISTENER FOR THE LOAD BALANCER  ON PORT 80----------------------------------------
 
-resource "aws_lb_listener" "jupiter_app_alb_listener" {
+resource "aws_lb_listener" "http_alb_listener" {
   load_balancer_arn = aws_lb.jupiter_app_lb.arn
   port                = 80
   protocol            = "HTTP"
+
+  default_action {
+    type             = "redirect"
+    redirect {
+      port        = "443"
+      protocol    = "HTTPS"
+      status_code = "HTTP_301"
+    }
+  }
+}
+
+# CREATING A LISTENER FOR THE LOAD BALANCER  ON PORT 443----------------------------------------
+
+resource "aws_lb_listener" "https_alb_listener" {
+  load_balancer_arn = aws_lb.jupiter_app_lb.arn
+  port                = 443
+  protocol            = "HTTPS"
+  ssl_policy          = var.ssl_policy
+  certificate_arn     = var.certificate_arn
 
   default_action {
     type             = "forward"
