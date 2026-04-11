@@ -49,7 +49,7 @@ module "autoscaling" {
   tags                  = local.project_tags
   public_subnet_id_az2a = module.vpc.public_subnet_id_az2a
   public_subnet_id_az2b = module.vpc.public_subnet_id_az2b
-  jupiter_app_tg_arn    = module.alb.jupiter_app_tg_arn
+  jupiter_app_tg_arn    = [module.alb.jupiter_app_tg_arn]
   max_size              = var.max_size
   min_size              = var.min_size
   desired_capacity      = var.desired_capacity
