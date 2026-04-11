@@ -41,6 +41,8 @@ module "alb" {
   tags                  = local.project_tags
   public_subnet_id_az2a = module.vpc.public_subnet_id_az2a
   public_subnet_id_az2b = module.vpc.public_subnet_id_az2b
+  ssl_policy            = var.ssl_policy
+  certificate_arn       = var.certificate_arn
 }
 
 module "autoscaling" {
@@ -56,4 +58,12 @@ module "autoscaling" {
   instance_type         = var.instance_type
   ami_id                = var.ami_id
   key_name              = var.key_name
+}
+
+module "route53" {
+  source                  = "./route53"
+  route53_zone_id         = var.route53_zone_id
+  name                    = var.name
+  jupiter_app_lb_dns_name = module.alb.jupiter_app_lb_dns_name
+  alb_zone_id             = module.alb.alb_zone_id
 }
