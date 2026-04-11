@@ -50,7 +50,7 @@ resource "aws_launch_template" "jupiter_server_launch_template" {
   image_id      = var.ami_id
   instance_type = var.instance_type
   key_name      = var.key_name
-  user_data     = filebase64("${path.module}/../Scripts/Jupiter-app-deployment.sh")
+  user_data     = base64encode(file("Scripts/Jupiter-app-deployment.sh"))
 
 network_interfaces {
   associate_public_ip_address = true
