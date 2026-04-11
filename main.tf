@@ -67,3 +67,8 @@ module "route53" {
   jupiter_app_lb_dns_name = module.alb.jupiter_app_lb_dns_name
   alb_zone_id             = module.alb.alb_zone_id
 }
+
+import {
+  to = module.route53.aws_route53_record.dns_record
+  id = "${var.route53_zone_id}_${var.name}_A"
+}
