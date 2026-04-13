@@ -72,3 +72,24 @@ import {
   to = module.route53.aws_route53_record.dns_record
   id = "${var.route53_zone_id}_${var.name}_A"
 }
+
+module "rds" {
+  source                       = "./RDS"
+  vpc_id                       = module.vpc.vpc_id
+  tags                         = local.project_tags
+  db_subnet_id_az2a            = module.vpc.db_subnet_id_az2a
+  db_subnet_id_az2b            = module.vpc.db_subnet_id_az2b
+  allocated_storage            = var.allocated_storage
+  db_name                      = var.db_name
+  engine                       = var.engine
+  engine_version               = var.engine_version
+  instance_class               = var.instance_class
+  parameter_group_name         = var.parameter_group_name
+  rds_secrets_manager_role_arn = module.iam.rds_secrets_manager_role_arn
+}
+
+module "iam" {
+  source     = "./IAM"
+  region     = var.region
+  account_id = var.account_id
+}
