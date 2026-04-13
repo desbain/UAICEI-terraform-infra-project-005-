@@ -4,7 +4,7 @@ resource "aws_db_subnet_group" "db_subnet_group" {
   name       = "db_subnet_group"
   subnet_ids = [var.db_subnet_id_az2a, var.db_subnet_id_az2b]
 
- tags = merge(var.tags, {
+  tags = merge(var.tags, {
     Name = "${var.tags["project"]}-${var.tags["application"]}-${var.tags["environment"]}-db-subnet-group"
   })
 
@@ -17,7 +17,7 @@ resource "aws_security_group" "rds_server_sg" {
   description = "Allow DB Traffic"
   vpc_id      = var.vpc_id
 
-   tags = merge(var.tags, {
+  tags = merge(var.tags, {
     Name = "${var.tags["project"]}-${var.tags["application"]}-${var.tags["environment"]}-rds-server-sg"
   })
 }
@@ -51,20 +51,20 @@ data "aws_secretsmanager_secret_versions" "rds_db_secret_value" {
 # CREATING MYSQL RDS INSTANCE
 
 resource "aws_db_instance" "rds_mysql" {
-  allocated_storage    = var.allocated_storage
-  db_name              = var.db_name
-  engine               = var.engine
-  engine_version       = var.engine_version
-  instance_class       = var.instance_class
-  username             = jsondecode(data.aws_secretsmanager_secret_versions.rds_db_secret_value.secret_string)["mysql_username"]
-  password             = jsondecode(data.aws_secretsmanager_secret_versions.rds_db_secret_value.secret_string)["mysql_password"]
-  parameter_group_name = var.parameter_group_name
-  skip_final_snapshot  = true
-  multi_az             = true
-  publicly_accessible  = false
-  storage_type         = "gp2"
- db_subnet_group_name = aws_db_subnet_group.db_subnet_group.id
- vpc_security_group_ids = [aws_security_group.rds_server_sg.id]
+  allocated_storage                   = var.allocated_storage
+  db_name                             = var.db_name
+  engine                              = var.engine
+  engine_version                      = var.engine_version
+  instance_class                      = var.instance_class
+  username                            = jsondecode(data.aws_secretsmanager_secret_versions.rds_db_secret_value.secret_string)["mysql_username"]
+  password                            = jsondecode(data.aws_secretsmanager_secret_versions.rds_db_secret_value.secret_string)["mysql_password"]
+  parameter_group_name                = var.parameter_group_name
+  skip_final_snapshot                 = true
+  multi_az                            = true
+  publicly_accessible                 = false
+  storage_type                        = "gp2"
+  db_subnet_group_name                = aws_db_subnet_group.db_subnet_group.id
+  vpc_security_group_ids              = [aws_security_group.rds_server_sg.id]
   iam_database_authentication_enabled = true
 
   tags = merge(var.tags, {
