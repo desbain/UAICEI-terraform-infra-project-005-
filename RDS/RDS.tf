@@ -44,7 +44,7 @@ data "aws_secretsmanager_secret" "rds_db_secret" {
   name = "jupiter_db_credentials" # name of the secret in secrets manager
 }
 
-data "aws_secretsmanager_secret_versions" "rds_db_secret_value" {
+data "aws_secretsmanager_secret_version" "rds_db_secret_value" {
   secret_id = data.aws_secretsmanager_secret.rds_db_secret.id
 }
 
@@ -56,8 +56,8 @@ resource "aws_db_instance" "rds_mysql" {
   engine                              = var.engine
   engine_version                      = var.engine_version
   instance_class                      = var.instance_class
-  username                            = jsondecode(data.aws_secretsmanager_secret_versions.rds_db_secret_value.secret_string)["mysql_username"]
-  password                            = jsondecode(data.aws_secretsmanager_secret_versions.rds_db_secret_value.secret_string)["mysql_password"]
+  username                            = jsondecode(data.aws_secretsmanager_secret_version.rds_db_secret_value.secret_string)["mysql_username"]
+  password                            = jsondecode(data.aws_secretsmanager_secret_version.rds_db_secret_value.secret_string)["mysql_password"]
   parameter_group_name                = var.parameter_group_name
   skip_final_snapshot                 = true
   multi_az                            = true
