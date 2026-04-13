@@ -4,11 +4,11 @@ provider "aws" {
 
 terraform {
   backend "s3" {
-    bucket         = "tfstate-remote-backend-005"
-    key            = "jupiter/statefile"
-    region         = "us-east-2"
-    use_lockfile   = true
-    encrypt        = true
+    bucket       = "tfstate-remote-backend-005"
+    key          = "jupiter/statefile"
+    region       = "us-east-2"
+    use_lockfile = true
+    encrypt      = true
   }
 }
 
